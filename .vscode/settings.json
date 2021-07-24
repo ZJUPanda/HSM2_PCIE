@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "history.h": "c",
+        "readline.h": "c",
+        "pci.h": "c",
+        "pci_regs.h": "c",
+        "libhsm2.h": "c",
+        "stdio.h": "c",
+        "types.h": "c",
+        "header.h": "c",
+        "config.h": "c",
+        "names.h": "c",
+        "stat.h": "c"
+    }
+}
