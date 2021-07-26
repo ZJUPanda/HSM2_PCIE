@@ -1,12 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-07-21 20:55:24
- * @LastEditTime: 2021-07-24 21:02:44
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /sm2_sign/libHSM2.h
- */
-
 #ifndef _LIB_HSM2_
 #define _LIB_HSM2_
 
