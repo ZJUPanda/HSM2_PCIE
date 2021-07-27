@@ -1,33 +1,6 @@
 #include "libHSM2.h"
 
-void sign_test()
-{
-    device_t *dev;
-    open_device(&dev);
-    SM2_Init(dev, BASE_ADDR1);
-    U32 rand[8] = {0x12345678, 0x12345678, 0x12345678, 0x12345678,
-                   0x12345678, 0x12345678, 0x12345678, 0x12345678};
-    U32 pri_key[8] = {0x3ea27606, 0xca83bffa, 0x3b946b0c, 0xdb8ff076,
-                      0xe4dd3d1a, 0xaf2bd6e2, 0x7290cefd, 0xc4365cf6};
-    U32 hash[8] = {0xfd93ea51, 0x6080a881, 0x1b3a16ff, 0x5f465ff7,
-                   0x2a1c94b6, 0xa55f6fa5, 0xcb7bd2b2, 0x501023c6};
-    U32 sign[16];
-    int flag = SM2_Sign(dev, BASE_ADDR0, rand, pri_key, hash, sign);
-    printf("sign result: ");
-    for (int i = 0; i < 16; i++)
-    {
-        printf("0x%.8x ", sign[i]);
-    }
-    printf("\n");
-    close_device(dev);
-}
 
-int main(void)
-{
-
-    sign_test();
-    return 0;
-}
 
 int open_device(device_t **dev)
 {
@@ -332,7 +305,7 @@ void SM2_Init(device_t *dev, U32 base_addr)
 
     // SM2_ex_code
     addr = base_addr + PARAM_ADDR * sizeof(U32);
-    memcpy(dev->addr + addr, SM2_in_code, sizeof(U32) * 256);
+    memcpy(dev->addr + addr, SM2_ex_code, sizeof(U32) * 256);
     msync((void *)(dev->addr + addr), sizeof(U32) * 256, MS_SYNC | MS_INVALIDATE);
 
     // Init command 1
@@ -529,7 +502,7 @@ int SM2_Decrypt(device_t *dev, U32 base_addr, U32 *pri_key, U32 *C1, U32 *S)
     U32 addr, d32;
     // write pri_key, C1
     addr = base_addr + DATA_ADDR * sizeof(U32);
-    memcpy(dev->addr + addr, rand, sizeof(U32) * 8);                  // private key
+    memcpy(dev->addr + addr, pri_key, sizeof(U32) * 8);                  // private key
     memcpy(dev->addr + addr + sizeof(U32) * 8, C1, sizeof(U32) * 16); // C1
     msync((void *)(dev->addr + addr), sizeof(U32) * 24, MS_SYNC | MS_INVALIDATE);
 
